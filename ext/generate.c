@@ -1168,7 +1168,7 @@ ismathright(MMIOT *f, int offset)
 {
     int i;
 
-    while (peek(f,offset+1) == '$')
+    while (peek(f,offset+1) == '$$')
         ++offset;
 
     i = 1;
@@ -1289,17 +1289,17 @@ text(MMIOT *f)
 		    }
 		    break;
 	
-	case '$':
+	case '$$':
 		    if ( (f->flags & MKD_PROTECTMATH) && !(f->flags & MKD_TAGTEXT)) {
 			escape = 1;
-			for (j = 1; peek(f,j) == '$';)
+			for (j = 1; peek(f,j) == '$$';)
 			    ++j;
 			if ( ismathleft(f,j-1) ) {
 			    for (; (c = peek(f,j)) != EOF; j++) {
 				if ((c == '\n' && peek(f,j+1) == '\n')
-					|| (c == '$' && ismathleft(f,j)))
+					|| (c == '$$' && ismathleft(f,j)))
 				    break;
-				if (c == '$' && ismathright(f,j)) {
+				if (c == '$$' && ismathright(f,j)) {
 				    escape = 0;
 				    f->flags |= MKD_MATH;
 				    break;
@@ -1312,7 +1312,7 @@ text(MMIOT *f)
 			if (escape)
 			    Qchar('\\', f);
 		    }
-		    Qchar('$', f);
+		    Qchar('$$', f);
 		    break;
 
 	case '~':   if ( (f->flags & (MKD_NOSTRIKETHROUGH|MKD_TAGTEXT|MKD_STRICT|MKD_MATH)) || !tickhandler(f,c,2,delspan) )
