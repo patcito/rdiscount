@@ -1145,7 +1145,7 @@ ismathleft(MMIOT *f, int offset)
 {
     int i;
 
-    while (peek(f,offset-1) == '$')
+    while (peek(f,offset-1) == '$$')
         --offset;
 
     i = 1;
